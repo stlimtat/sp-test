@@ -1,4 +1,4 @@
 Django==2.0.5    
 django-neomodel
 djangorestframework
-neo4j-driver
+neo4j-driver==1.5.2
