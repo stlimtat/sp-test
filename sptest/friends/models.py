@@ -1,6 +1,9 @@
 from datetime import datetime
+
 from django_neomodel import DjangoNode
-from neomodel import StructuredNode, StructuredRel, EmailProperty, DateTimeProperty, StringProperty, UniqueIdProperty, RelationshipTo, RelationshipFrom, Relationship
+from neomodel import StructuredRel, EmailProperty, DateTimeProperty, StringProperty, UniqueIdProperty, RelationshipTo, \
+    Relationship
+
 
 # Create your models here.
 class PersonRelationship(StructuredRel):
@@ -19,5 +22,3 @@ class Person(DjangoNode):
     created = DateTimeProperty(default=datetime.utcnow())
     modified_by = StringProperty()
     modified = DateTimeProperty(default=datetime.utcnow())
-
-
