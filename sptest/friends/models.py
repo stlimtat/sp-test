@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.forms import ModelForm
 from django_neomodel import DjangoNode
 from neomodel import StructuredRel, EmailProperty, DateTimeProperty, StringProperty, UniqueIdProperty, RelationshipTo, \
     Relationship
@@ -22,3 +23,12 @@ class Person(DjangoNode):
     created = DateTimeProperty(default=datetime.utcnow())
     modified_by = StringProperty()
     modified = DateTimeProperty(default=datetime.utcnow())
+
+    class Meta:
+        app_label = 'friends'
+
+
+class PersonForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = ('email',)
