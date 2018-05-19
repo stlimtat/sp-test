@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  db:
+    image: neo4j:3.4
+    volumes:
+      - $HOME/neo4j/data:/data
+      - $HOME/neo4j/logs:/logs
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+  web:
+    build: sptest
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
