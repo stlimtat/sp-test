@@ -10,7 +10,7 @@ services:
       - "7474:7474"
       - "7687:7687"
   web:
-    build: sptest
+    build: .
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
