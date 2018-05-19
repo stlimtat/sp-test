@@ -6,10 +6,10 @@ from neomodel import StructuredNode, EmailProperty, DateTimeProperty, StringProp
 class Person(DjangoNode):
     uid = UniqueIdProperty()
     email = EmailProperty(unique_index=True)
-    friend = Relationship('Person', 'FRIEND')
-    block = RelationshipTo('Person', 'BLOCK')
+    friends = Relationship('Person', 'FRIEND')
+    blocks = RelationshipTo('Person', 'BLOCK')
     # blocked_by = RelationshipFrom('Person', 'BLOCKED_BY')
-    subscribe = RelationshipTo('Person', 'SUBSCRIBE')
+    subscribes = RelationshipTo('Person', 'SUBSCRIBE')
     # subscribed_by = RelationshipFrom('Person', 'SUBSCRIBED_BY')
 
     created_by = StringProperty()
