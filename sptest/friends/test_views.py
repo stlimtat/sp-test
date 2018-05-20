@@ -14,8 +14,26 @@ class PersonListViewTestCase(TestCase):
         print(repr(request))
         view = PersonListView.as_view()
         print(repr(view))
+        self.assertIsNotNone(view)
         response = view(request)
+        self.assertIsNotNone(response)
         print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
 
     def test_get_persons_list_with_client(self):
+        print("Running client")
         response = self.client.get('/friends/')
+        print(repr(response))
+
+    def test_post_issue01(self):
+        data = {
+            "friends": {
+                "andy@example.com",
+                "john@example.com"
+            }
+        }
+        request = self.factory.post('/friends/', data, format='json')
+        view = PersonListView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
