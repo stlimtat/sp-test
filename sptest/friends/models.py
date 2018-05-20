@@ -25,10 +25,10 @@ class Person(DjangoNode):
     modified = DateTimeProperty(default=datetime.utcnow())
 
     class Meta:
+        # fields = ('email', 'uid')
         app_label = 'friends'
-
 
 class PersonForm(ModelForm):
     class Meta:
         model = Person
-        fields = ('email',)
+        fields = ('email', 'uid')
