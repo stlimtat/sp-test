@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User, Group
+from django.core.validators import EmailValidator
 from rest_framework import serializers
 
 from sptest.friends.models import PersonForm
@@ -8,6 +9,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'groups')
+
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -20,5 +22,8 @@ class PersonFormSerializer(serializers.HyperlinkedModelSerializer):
         model = PersonForm
         fields = ('email', 'uid')
 
+
 class PersonSerializer(serializers.Serializer):
-    email = serializers.EmailField(read_only=True)
+    email = serializers.EmailField(
+        validators=[EmailValidator]
+    )
