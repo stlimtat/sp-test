@@ -1,12 +1,18 @@
 from django.test import SimpleTestCase
 
+from sptest.apps import SptestConfig
 from sptest.friends.models import Person
 from sptest.friends.serializers import PersonSerializer
+from sptest.friends.test_models import PersonTestCase
 
 
 class PersonSerializerTestCase(SimpleTestCase):
     def setUp(self):
+        SptestConfig.setup_models()
         self.persons = Person.nodes.all()
+
+    def tearDown(self):
+        PersonTestCase.teardown_models()
 
     def test_repr_serializer(self):
         serializer = PersonSerializer()
