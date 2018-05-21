@@ -1,11 +1,10 @@
-from django.test import TestCase
+from django.test import SimpleTestCase
 
 from sptest.friends.models import Person
 from sptest.friends.serializers import PersonSerializer
 
 
-class PersonSerializerTestCase(TestCase):
-
+class PersonSerializerTestCase(SimpleTestCase):
     def setUp(self):
         self.persons = Person.nodes.all()
 

@@ -1,10 +1,10 @@
-from django.test import TestCase
+from django.test import SimpleTestCase
 from rest_framework.test import APIRequestFactory, APIClient
 
 from sptest.friends.views import PersonListView
 
 
-class PersonListViewTestCase(TestCase):
+class PersonListViewTestCase(SimpleTestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.client = APIClient()
