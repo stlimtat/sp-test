@@ -1,13 +1,19 @@
 from django.test import SimpleTestCase
 from rest_framework.test import APIRequestFactory, APIClient
 
+from sptest.apps import SptestConfig
+from sptest.friends.test_models import PersonTestCase
 from sptest.friends.views import PersonListView
 
 
 class PersonListViewTestCase(SimpleTestCase):
     def setUp(self):
+        SptestConfig.setup_models()
         self.factory = APIRequestFactory()
         self.client = APIClient()
+
+    def tearDown(self):
+        PersonTestCase.teardown_models()
 
     def test_get_persons_list_with_factory(self):
         request = self.factory.get('/friends/')
@@ -37,3 +43,5 @@ class PersonListViewTestCase(SimpleTestCase):
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
