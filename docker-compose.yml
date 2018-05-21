@@ -7,14 +7,14 @@ services:
       - $HOME/neo4j/data:/data
       - $HOME/neo4j/logs:/logs
     ports:
-      - "7474:7474"
-      - "7687:7687"
+      - "7474:7474/tcp"
+      - "7687:7687/tcp"
   web:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - "8000:8000/tcp"
     depends_on:
       - db
