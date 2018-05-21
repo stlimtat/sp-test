@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.forms import ModelForm
 from django_neomodel import DjangoNode
-from neomodel import StructuredRel, EmailProperty, DateTimeProperty, StringProperty, UniqueIdProperty, RelationshipTo, \
+from neomodel import StructuredRel, EmailProperty, DateTimeProperty, StringProperty, RelationshipTo, \
     Relationship
 
 
@@ -11,7 +11,6 @@ class PersonRelationship(StructuredRel):
     since = DateTimeProperty(default=datetime.utcnow())
 
 class Person(DjangoNode):
-    uid = UniqueIdProperty()
     email = EmailProperty(unique_index=True)
     friends = Relationship('Person', 'FRIEND', model=PersonRelationship)
     blocks = RelationshipTo('Person', 'BLOCK', model=PersonRelationship)
@@ -25,10 +24,10 @@ class Person(DjangoNode):
     modified = DateTimeProperty(default=datetime.utcnow())
 
     class Meta:
-        # fields = ('email', 'uid')
+        # fields = ('email')
         app_label = 'friends'
 
 class PersonForm(ModelForm):
     class Meta:
         model = Person
-        fields = ('email', 'uid')
+        fields = ('email',)
