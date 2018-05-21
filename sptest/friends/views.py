@@ -68,7 +68,7 @@ class PersonListView(APIView):
             for friend_email in friends_list:
                 serializer = PersonSerializer(data={'email': friend_email})
                 if not serializer.is_valid():
-                    errors = errors.copy(serializer.errors)
+                    errors.update(serializer.errors)
             if len(errors) > 0:
                 return Response(
                     errors,
@@ -76,13 +76,13 @@ class PersonListView(APIView):
                 )
             for friend_email in friends_list:
                 person = Person.get_or_create(
-                    ('email': friend_email,)
+                    ({'email': friend_email})
                 )
-                person_nodes += person
+                if not person in person_nodes:
+                    person_nodes += person
             for curr_person in person_nodes:
                 person_nodes.remove(curr_person)
                 for looping_person in person_nodes:
                     if not looping_person.friends.is_connected(curr_person):
                         curr_person.friends.connect(looping_person)
-                        # curr_person.friends.save()
         return Response({"success": True})
