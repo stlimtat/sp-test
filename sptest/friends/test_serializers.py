@@ -29,3 +29,9 @@ class PersonSerializerTestCase(SimpleTestCase):
         serializer = PersonSerializer(person)
         self.assertIsNotNone(serializer.data)
         print(repr(serializer.data))
+
+    def test_serialize_person_user8_invalid(self):
+        serializer = PersonSerializer(data={'email': 'user8@a.a'})
+        self.assertFalse(serializer.is_valid())
+        self.assertIsNotNone(serializer.errors)
+        print(repr(serializer.errors))
