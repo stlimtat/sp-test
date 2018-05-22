@@ -35,10 +35,10 @@ class PersonListViewTestCase(SimpleTestCase):
 
     def test_post_issue01(self):
         data = {
-            "friends": {
+            "friends": [
                 "andy01@example.com",
                 "john01@example.com"
-            }
+            ]
         }
         request = self.factory.post('/friends/', data, format='json')
         view = PersonListView.as_view()
@@ -51,10 +51,10 @@ class PersonListViewTestCase(SimpleTestCase):
 
     def test_post_issue01_invalid_friends(self):
         data = {
-            "misspelt": {
+            "misspelt": [
                 "andy02@example.com",
                 "john02@example.com"
-            }
+            ]
         }
         request = self.factory.post('/friends/', data, format='json')
         view = PersonListView.as_view()
@@ -68,10 +68,10 @@ class PersonListViewTestCase(SimpleTestCase):
 
     def test_post_issue01_invalid_emails(self):
         data = {
-            "friends": {
+            "friends": [
                 "andy03example.com",
                 "john03example.com"
-            }
+            ]
         }
         request = self.factory.post('/friends/', data, format='json')
         view = PersonListView.as_view()
@@ -85,11 +85,11 @@ class PersonListViewTestCase(SimpleTestCase):
 
     def test_post_issue01_all_repeated_emails(self):
         data = {
-            "friends": {
+            "friends": [
                 "andy04@example.com",
                 "andy04@example.com",
                 "andy04@example.com"
-            }
+            ]
         }
         request = self.factory.post('/friends/', data, format='json')
         view = PersonListView.as_view()
@@ -103,7 +103,7 @@ class PersonListViewTestCase(SimpleTestCase):
 
     def test_post_issue01_ten_emails(self):
         data = {
-            "friends": {
+            "friends": [
                 "user20@example.com",
                 "user21@example.com",
                 "user22@example.com",
@@ -114,7 +114,7 @@ class PersonListViewTestCase(SimpleTestCase):
                 "user27@example.com",
                 "user28@example.com",
                 "user29@example.com"
-            }
+            ]
         }
         request = self.factory.post('/friends/', data, format='json')
         view = PersonListView.as_view()
