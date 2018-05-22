@@ -27,3 +27,7 @@ class PersonSerializer(serializers.Serializer):
     email = serializers.EmailField(
         validators=[EmailValidator]
     )
+
+
+class FriendsRequestSerializer(serializers.Serializer):
+    friends = serializers.ListField(child=serializers.EmailField())
