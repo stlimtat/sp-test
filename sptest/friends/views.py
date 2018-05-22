@@ -1,6 +1,4 @@
 from django.contrib.auth.models import User
-from django.http import JsonResponse
-from django.utils.translation import gettext as _
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -13,22 +11,6 @@ from sptest.friends.serializers import UserSerializer, PersonSerializer
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-
-
-class PersonDetailView(APIView):
-
-    # GET Person by unique identifier (pk) - for geomodel there is no pk
-    def get_object(self, pk):
-        try:
-            return Person.nodes.filter(uid=pk)
-        except Person.DoesNotExist:
-            print(_("Person with uuid '%(pk)' does not exists.") % {'pk': pk})
-
-    def get(self, request, pk, format=None):
-        person = self.get_object(self, pk)
-        serializer = PersonSerializer(person)
-        return JsonResponse(serializer.data)
-
 
 class PersonListView(APIView):
     def get(self, request, format=None):
@@ -75,14 +57,22 @@ class PersonListView(APIView):
                     status=status.HTTP_406_NOT_ACCEPTABLE
                 )
             for friend_email in friends_list:
-                person = Person.get_or_create(
-                    ({'email': friend_email})
+                persons_get_or_create = Person.get_or_create(
+                    {'email': friend_email},
                 )
-                if not person in person_nodes:
-                    person_nodes += person
-            for curr_person in person_nodes:
-                person_nodes.remove(curr_person)
-                for looping_person in person_nodes:
-                    if not looping_person.friends.is_connected(curr_person):
-                        curr_person.friends.connect(looping_person)
+                if not persons_get_or_create[0] in person_nodes:
+                    person_nodes += persons_get_or_create
+            if len(person_nodes) < 2:
+                return Response(
+                    {
+                        'friends': [u'number of friends not acceptable']
+                    },
+                    status=status.HTTP_406_NOT_ACCEPTABLE
+                )
+            else:
+                for curr_person in person_nodes:
+                    person_nodes.remove(curr_person)
+                    for looping_person in person_nodes:
+                        if not looping_person.friends.is_connected(curr_person):
+                            curr_person.friends.connect(looping_person)
         return Response({"success": True})
