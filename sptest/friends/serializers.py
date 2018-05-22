@@ -29,11 +29,28 @@ class PersonSerializer(serializers.Serializer):
     )
 
 
+"""
+The request serializers
+"""
 class FriendsRequestSerializer(serializers.Serializer):
     friends = serializers.ListField(child=serializers.EmailField(),
                                     min_length=2)
 
 
+class EmailRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
+"""
+The response serializers
+"""
 class SuccessResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField(required=True)
+    myerrors = serializers.DictField(child=serializers.CharField())
+
+
+class FriendsResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField(required=True)
+    friends = serializers.ListField(child=serializers.EmailField())
+    count = serializers.IntegerField()
     myerrors = serializers.DictField(child=serializers.CharField())
