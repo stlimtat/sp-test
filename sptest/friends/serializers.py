@@ -30,4 +30,10 @@ class PersonSerializer(serializers.Serializer):
 
 
 class FriendsRequestSerializer(serializers.Serializer):
-    friends = serializers.ListField(child=serializers.EmailField())
+    friends = serializers.ListField(child=serializers.EmailField(),
+                                    min_length=2)
+
+
+class SuccessResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField(required=True)
+    myerrors = serializers.DictField(child=serializers.CharField())
