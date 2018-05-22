@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APIClient
 
 from sptest.apps import SptestConfig
-from sptest.friends.test_models import PersonTestCase
 from sptest.friends.views import PersonListView
 
 
@@ -14,7 +13,8 @@ class PersonListViewTestCase(SimpleTestCase):
         self.client = APIClient()
 
     def tearDown(self):
-        PersonTestCase.teardown_models()
+        pass
+        # PersonTestCase.teardown_models()
 
     def test_get_persons_list_with_factory(self):
         request = self.factory.get('/friends/')
@@ -33,18 +33,6 @@ class PersonListViewTestCase(SimpleTestCase):
         response = self.client.get('/friends/')
         print(repr(response))
 
-    def test_get_friends_by_email(self):
-        data = {
-            "email": "user1@a.com"
-        }
-        request = self.factory.get('/friends/', data, format='json')
-        view = PersonListView.as_view()
-        response = view(request)
-        self.assertIsNotNone(response)
-        print(repr(response))
-        self.assertIsNotNone(response.data)
-        print(repr(response.data))
-        self.assertTrue(status.is_success(response.status_code))
 
     def test_post_issue01(self):
         data = {
@@ -137,4 +125,17 @@ class PersonListViewTestCase(SimpleTestCase):
         self.assertIsNotNone(response.data)
         print(repr(response.data))
         print(response.status_code)
+        self.assertTrue(status.is_success(response.status_code))
+
+    def test_get_issue02_friends_by_email(self):
+        data = {
+            "email": "user1@a.com"
+        }
+        request = self.factory.get('/friends/', data, format='json')
+        view = PersonListView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
+        print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
         self.assertTrue(status.is_success(response.status_code))
