@@ -46,8 +46,11 @@ The response serializers
 """
 class SuccessResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField(default=True)
-    errors = serializers.DictField(child=serializers.CharField(), allow_null=True)
 
+
+class ErrorResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField(default=True)
+    errors = serializers.DictField(child=serializers.CharField(), allow_null=True)
 
 class FriendsResponseSerializer(serializers.Serializer):
     success = serializers.BooleanField(default=True)
