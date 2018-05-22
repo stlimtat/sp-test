@@ -45,12 +45,11 @@ class EmailRequestSerializer(serializers.Serializer):
 The response serializers
 """
 class SuccessResponseSerializer(serializers.Serializer):
-    success = serializers.BooleanField(required=True)
-    myerrors = serializers.DictField(child=serializers.CharField())
+    success = serializers.BooleanField(default=True)
+    errors = serializers.DictField(child=serializers.CharField(), allow_null=True)
 
 
 class FriendsResponseSerializer(serializers.Serializer):
-    success = serializers.BooleanField(required=True)
+    success = serializers.BooleanField(default=True)
     friends = serializers.ListField(child=serializers.EmailField())
     count = serializers.IntegerField()
-    myerrors = serializers.DictField(child=serializers.CharField())
