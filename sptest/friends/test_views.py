@@ -33,6 +33,19 @@ class PersonListViewTestCase(SimpleTestCase):
         response = self.client.get('/friends/')
         print(repr(response))
 
+    def test_get_friends_by_email(self):
+        data = {
+            "email": "user1@a.com"
+        }
+        request = self.factory.get('/friends/', data, format='json')
+        view = PersonListView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
+        print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
+        self.assertTrue(status.is_success(response.status_code))
+
     def test_post_issue01(self):
         data = {
             "friends": [
