@@ -16,10 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from sptest.friends import views
+from sptest.friends import friends_views
 
 urlpatterns = [
-    url(r'^friends/$', views.PersonListView.as_view()),
+    url(r'^friends/$', friends_views.FriendsView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

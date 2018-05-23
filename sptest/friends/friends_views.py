@@ -13,22 +13,16 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
-class PersonListView(APIView):
+
+class FriendsView(APIView):
+    # The get function has become a monster
+    # It provides for issue #02 and #03
     def get(self, request, format=None):
         result = None
         result_status = status.HTTP_200_OK
-        # default action - list all persons in graphdb with pagination, I think
-        if not (request.query_params):
-            persons = Person.nodes.all()
-            result_person_list = self.get_emails_for_friends_response_list(persons)
-            result = {
-                'success': True,
-                'friends': result_person_list,
-                'count': len(result_person_list)
-            }
-        # Handling Issue #02 still in GET
-        elif 'email' in request.query_params:
-            # GET friends for the person specified
+        if request.query_params and 'email' in request.query_params:
+            # Handling Issue #02 still in GET
+            # GET friends for the email specified
             email_req_serializer = EmailRequestSerializer(data=request.query_params)
             if not email_req_serializer.is_valid():
                 result = {
@@ -50,7 +44,7 @@ class PersonListView(APIView):
                     'count': len(result_friends_list)
                 }
         # Handling Issue #03 still in GET
-        elif 'friends' in request.query_params:
+        elif request.query_params and 'friends' in request.query_params:
             result, result_status = self.validate_friends_req_serializer_and_get_email_list(request.query_params, True)
             if result_status == status.HTTP_200_OK:
                 person_list = self.get_or_create_email_list(False, result.get('friends'))
@@ -68,6 +62,15 @@ class PersonListView(APIView):
                         'friends': result_friends_list,
                         'count': len(result_friends_list)
                     }
+            # default action - list all persons in graphdb with pagination, I think
+        else:
+            persons = Person.nodes.all()
+            result_person_list = self.get_emails_for_friends_response_list(persons)
+            result = {
+                'success': True,
+                'friends': result_person_list,
+                'count': len(result_person_list)
+            }
         return Response(result, status=result_status)
 
 

@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APIClient
 
 from sptest.apps import SptestConfig
-from sptest.friends.views import PersonListView
+from sptest.friends.friends_views import FriendsView
 
 
 class PersonListViewTestCase(SimpleTestCase):
@@ -19,7 +19,7 @@ class PersonListViewTestCase(SimpleTestCase):
     def test_get_issue00_persons_list_with_factory(self):
         request = self.factory.get('/friends/')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         print(repr(view))
         self.assertIsNotNone(view)
         response = view(request)
@@ -42,7 +42,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.post('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -59,7 +59,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.post('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -77,7 +77,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.post('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -96,7 +96,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.post('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -122,7 +122,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.post('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -137,7 +137,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.get('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -151,7 +151,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.get('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -168,7 +168,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.get('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -184,7 +184,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.get('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
@@ -202,7 +202,7 @@ class PersonListViewTestCase(SimpleTestCase):
         }
         request = self.factory.get('/friends/', data, format='json')
         print(repr(request))
-        view = PersonListView.as_view()
+        view = FriendsView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
         print(repr(response))
