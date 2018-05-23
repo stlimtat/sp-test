@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django_neomodel import DjangoNode
 from neomodel import StructuredRel, EmailProperty, DateTimeProperty, StringProperty, RelationshipTo, \
     Relationship, Traversal
+from neomodel import db
 
 
 # Create your models here.
@@ -50,7 +51,13 @@ class Person(DjangoNode):
     def get_common_friends(person_list):
         result = []
         # We don't really know how to handle more than 2 persons at the moment
-
+        query = "MATCH (n:Person)-[:FRIEND]-(friend:Person)-[:FRIEND]-(m:Person) \
+                WHERE n.email='%s' \
+                AND m.email='%s' \
+                RETURN DISTINCT friend.email \
+                ORDER BY friend.email ASC" % (person_list[0].email, person_list[1].email)
+        result, meta = db.cypher_query(query)
+        # We do not need to run the inflate method
         return result
 
     class Meta:

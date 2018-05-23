@@ -16,7 +16,7 @@ class PersonListViewTestCase(SimpleTestCase):
         pass
         # PersonTestCase.teardown_models()
 
-    def test_get_persons_list_with_factory(self):
+    def test_get_issue00_persons_list_with_factory(self):
         request = self.factory.get('/friends/')
         print(repr(request))
         view = PersonListView.as_view()
@@ -28,8 +28,7 @@ class PersonListViewTestCase(SimpleTestCase):
         self.assertIsNotNone(response.data)
         print(repr(response.data))
 
-    def test_get_persons_list_with_client(self):
-        print("Running client")
+    def test_get_issue00_persons_list_with_client(self):
         response = self.client.get('/friends/')
         print(repr(response))
 
@@ -42,6 +41,7 @@ class PersonListViewTestCase(SimpleTestCase):
             ]
         }
         request = self.factory.post('/friends/', data, format='json')
+        print(repr(request))
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
@@ -58,6 +58,7 @@ class PersonListViewTestCase(SimpleTestCase):
             ]
         }
         request = self.factory.post('/friends/', data, format='json')
+        print(repr(request))
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
@@ -75,6 +76,7 @@ class PersonListViewTestCase(SimpleTestCase):
             ]
         }
         request = self.factory.post('/friends/', data, format='json')
+        print(repr(request))
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
@@ -93,6 +95,7 @@ class PersonListViewTestCase(SimpleTestCase):
             ]
         }
         request = self.factory.post('/friends/', data, format='json')
+        print(repr(request))
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
@@ -118,6 +121,7 @@ class PersonListViewTestCase(SimpleTestCase):
             ]
         }
         request = self.factory.post('/friends/', data, format='json')
+        print(repr(request))
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
@@ -132,6 +136,7 @@ class PersonListViewTestCase(SimpleTestCase):
             "email": "user1@a.com"
         }
         request = self.factory.get('/friends/', data, format='json')
+        print(repr(request))
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
@@ -145,6 +150,7 @@ class PersonListViewTestCase(SimpleTestCase):
             "email": "user4@a.com"
         }
         request = self.factory.get('/friends/', data, format='json')
+        print(repr(request))
         view = PersonListView.as_view()
         response = view(request)
         self.assertIsNotNone(response)
@@ -152,3 +158,54 @@ class PersonListViewTestCase(SimpleTestCase):
         self.assertIsNotNone(response.data)
         print(repr(response.data))
         self.assertTrue(status.is_success(response.status_code))
+
+    def test_get_issue03_common_friends(self):
+        data = {
+            "friends": [
+                "user2@a.com",
+                "user3@a.com"
+            ]
+        }
+        request = self.factory.get('/friends/', data, format='json')
+        print(repr(request))
+        view = PersonListView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
+        print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
+        self.assertTrue(status.is_success(response.status_code))
+
+    def test_get_issue03_only_one_friend(self):
+        data = {
+            "friends": [
+                "user2@a.com"
+            ]
+        }
+        request = self.factory.get('/friends/', data, format='json')
+        print(repr(request))
+        view = PersonListView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
+        print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
+        self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
+
+    def test_get_issue03_three_friends(self):
+        data = {
+            "friends": [
+                "user1@a.com",
+                "user2@a.com",
+                "user3@a.com"
+            ]
+        }
+        request = self.factory.get('/friends/', data, format='json')
+        print(repr(request))
+        view = PersonListView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
+        print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
+        self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
