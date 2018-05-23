@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets, status
 
 from sptest.friends.models import Person
-from sptest.friends.serializers import UserSerializer, FriendsRequestSerializer, PersonSerializer
+from sptest.friends.serializers import UserSerializer, FriendsRequestSerializer, RequestorTargetRequestSerializer
 
 
 # Create your views here.
@@ -39,12 +39,20 @@ class ViewUtilities():
         return result, result_status
 
     @staticmethod
-    def serialize_and_check_if_valid_person(email):
+    def validate_req_tgt_req_serializer(data):
         result = {}
-        person_serializer = PersonSerializer(data={'email': email})
-        if not person_serializer.is_valid():
-            result.update(person_serializer.errors)
-        return result
+        result_status = status.HTTP_200_OK
+        req_tgt_req_serializer = RequestorTargetRequestSerializer(data=data)
+        if not req_tgt_req_serializer.is_valid():
+            result = {
+                'success': False,
+                'errors': req_tgt_req_serializer.errors
+            }
+            result_status = status.HTTP_406_NOT_ACCEPTABLE
+        else:
+            result['requestor'] = req_tgt_req_serializer.validated_data.get('requestor')
+            result['target'] = req_tgt_req_serializer.validated_data.get('target')
+        return result, result_status
 
     @staticmethod
     def get_or_create_email_list(is_create, email_list):
@@ -65,10 +73,11 @@ class ViewUtilities():
     @staticmethod
     def connect_person_list_as_friends(person_list):
         for current_person in person_list:
-            person_list.remove(current_person)
-            for looping_person in person_list:
-                if not looping_person.friends.is_connected(current_person):
-                    current_person.friends.connect(looping_person)
+            inner_loop_person_list = list(person_list)
+            inner_loop_person_list.remove(current_person)
+            for loop_person in inner_loop_person_list:
+                if not loop_person.friends.is_connected(current_person):
+                    current_person.friends.connect(loop_person)
         return
 
     @staticmethod
