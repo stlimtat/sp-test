@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import viewsets, status
 
 from sptest.friends.models import Person
@@ -13,8 +14,6 @@ class UserViewSet(viewsets.ModelViewSet):
 """
 Utility functions for reuse
 """
-
-
 class ViewUtilities():
     @staticmethod
     def validate_friends_req_serializer_and_get_email_list(data, is_exactly_two):
