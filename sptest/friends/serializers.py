@@ -39,20 +39,3 @@ class FriendsRequestSerializer(serializers.Serializer):
 
 class EmailRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
-
-
-"""
-The response serializers
-"""
-class SuccessResponseSerializer(serializers.Serializer):
-    success = serializers.BooleanField(default=True)
-
-
-class ErrorResponseSerializer(serializers.Serializer):
-    success = serializers.BooleanField(default=True)
-    errors = serializers.DictField(child=serializers.CharField(), allow_null=True)
-
-class FriendsResponseSerializer(serializers.Serializer):
-    success = serializers.BooleanField(default=True)
-    friends = serializers.ListField(child=serializers.EmailField())
-    count = serializers.IntegerField()

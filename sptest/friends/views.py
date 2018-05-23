@@ -21,19 +21,19 @@ class PersonListView(APIView):
         if not (request.query_params and 'email' in request.query_params):
             persons = Person.nodes.all()
             result_person_list = self.get_emails_for_friends_response_list(persons)
-            result = FriendsResponseSerializer({
+            result = {
                 'success': True,
                 'friends': result_person_list,
                 'count': len(result_person_list)
-            })
+            }
         else:
             # GET friends for the person specified
             email_req_serializer = EmailRequestSerializer(data=request.query_params)
             if not email_req_serializer.is_valid():
-                result = SuccessResponseSerializer({
+                result = {
                     'success': False,
                     'errors': email_req_serializer.errors
-                })
+                }
                 result_status = status.HTTP_406_NOT_ACCEPTABLE
             else:
                 # Get the persons
@@ -43,21 +43,21 @@ class PersonListView(APIView):
                 person = person_list[0]
                 friends = Person.get_all_relation_of_type(person, EITHER, PersonRelationship.FRIEND)
                 result_friends_list = self.get_emails_for_friends_response_list(friends)
-                result = FriendsResponseSerializer({
+                result = {
                     'success': True,
                     'friends': result_friends_list,
                     'count': len(result_friends_list)
-                })
-        return Response(result.data, status=result_status)
+                }
+        return Response(result, status=result_status)
 
 
     """
       Issue #01 - Link users
     """
     def post(self, request, format=None):
-        result = SuccessResponseSerializer({
+        result = {
             'success': True
-        })
+        }
         result_status = status.HTTP_200_OK
         # This is just to have a valid user in session
         request_user = AnonymousUser.id
@@ -65,27 +65,27 @@ class PersonListView(APIView):
             request_user = request.user
         # Figure out if how the request is represented
         if not (request.data and 'friends' in request.data):
-            result = ErrorResponseSerializer({
+            result = {
                 'success': False,
                 'errors': {'friends': [u'friends is not provided in body of request']}
-            })
+            }
             result_status = status.HTTP_406_NOT_ACCEPTABLE
         else:
             friends_req_serializer = FriendsRequestSerializer(data=request.data)
             if not friends_req_serializer.is_valid():
-                result = ErrorResponseSerializer({
+                result = {
                     'success': False,
                     'errors': friends_req_serializer.errors
-                })
+                }
                 result_status = status.HTTP_406_NOT_ACCEPTABLE
             else:
                 # Running the get_or_create function
                 friends_email_list = set(friends_req_serializer.validated_data.get('friends'))
                 if len(friends_email_list) < 2:
-                    result = ErrorResponseSerializer({
+                    result = {
                         'success': False,
                         'errors': {'friends': [u'number of friends provided is not valid']}
-                    })
+                    }
                     result_status = status.HTTP_406_NOT_ACCEPTABLE
                 else:
                     person_list = self.get_or_create_email_list(True, friends_email_list)

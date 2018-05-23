@@ -5,7 +5,7 @@ from rest_framework.renderers import JSONRenderer
 
 from sptest.apps import SptestConfig
 from sptest.friends.models import Person
-from sptest.friends.serializers import PersonSerializer, FriendsRequestSerializer, FriendsResponseSerializer
+from sptest.friends.serializers import PersonSerializer, FriendsRequestSerializer
 from sptest.friends.test_models import PersonTestCase
 
 
@@ -71,22 +71,3 @@ class PersonSerializerTestCase(SimpleTestCase):
         self.assertFalse(serializer.is_valid())
         self.assertIsNotNone(serializer.errors)
         print(repr(serializer.errors))
-
-    def test_serialize_friendsresponseserializer(self):
-        serializer = FriendsResponseSerializer(
-            {
-                'success': True,
-                'friends': [''],
-                'count': 1,
-                'myerrors': None
-            }
-        )
-        self.assertIsNotNone(serializer.data)
-        print(repr(serializer.data))
-        serializer = FriendsResponseSerializer(data={})
-        serializer.success = True
-        serializer.friends = ['a@b.com']
-        serializer.count = 1
-        serializer.myerrors = None
-        serializer.is_valid()
-        print(repr(serializer.data))
