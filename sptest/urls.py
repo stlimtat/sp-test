@@ -20,6 +20,7 @@ from sptest.friends import friends_views
 
 urlpatterns = [
     url(r'^friends/$', friends_views.FriendsView.as_view()),
+    url(r'^subscribe/$', friends_views.FriendsView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

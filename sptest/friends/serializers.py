@@ -36,6 +36,10 @@ class FriendsRequestSerializer(serializers.Serializer):
     friends = serializers.ListField(child=serializers.EmailField(),
                                     min_length=2)
 
-
 class EmailRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
+
+
+class RequestorTargetRequestSerializer(serializers.Serializer):
+    requestor = serializers.EmailField(required=True)
+    target = serializers.EmailField(required=True)
