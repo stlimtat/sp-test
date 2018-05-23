@@ -6,7 +6,7 @@ from sptest.apps import SptestConfig
 from sptest.friends.friends_views import FriendsView
 
 
-class PersonListViewTestCase(SimpleTestCase):
+class FriendsViewTestCase(SimpleTestCase):
     def setUp(self):
         SptestConfig.setup_models()
         self.factory = APIRequestFactory()

@@ -1,17 +1,11 @@
 from django.contrib.auth.models import AnonymousUser
 from neomodel import EITHER
-from rest_framework import viewsets, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from sptest.friends.models import Person, PersonRelationship
 from sptest.friends.serializers import *
-
-
-# Create your views here.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
 
 
 class FriendsView(APIView):
