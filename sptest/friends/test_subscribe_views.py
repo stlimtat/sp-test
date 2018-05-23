@@ -21,7 +21,7 @@ class SubscribeViewTestCase(SimpleTestCase):
             "requestor": "user4@a.com",
             "target": "user5@a.com"
         }
-        request = self.factory.get('/subscribe/', data, format='json')
+        request = self.factory.post('/subscribe/', data, format='json')
         print(repr(request))
         view = SubscribeView.as_view()
         response = view(request)
@@ -35,7 +35,7 @@ class SubscribeViewTestCase(SimpleTestCase):
         data = {
             "requestor": "user4@a.com"
         }
-        request = self.factory.get('/subscribe/', data, format='json')
+        request = self.factory.post('/subscribe/', data, format='json')
         print(repr(request))
         view = SubscribeView.as_view()
         response = view(request)
@@ -49,7 +49,7 @@ class SubscribeViewTestCase(SimpleTestCase):
         data = {
             "target": "user4@a.com"
         }
-        request = self.factory.get('/subscribe/', data, format='json')
+        request = self.factory.post('/subscribe/', data, format='json')
         print(repr(request))
         view = SubscribeView.as_view()
         response = view(request)
@@ -65,7 +65,22 @@ class SubscribeViewTestCase(SimpleTestCase):
             "requestor": "user5@a.com",
             "target": "user6@a.com"
         }
-        request = self.factory.get('/subscribe/', data, format='json')
+        request = self.factory.post('/subscribe/', data, format='json')
+        print(repr(request))
+        view = SubscribeView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
+        print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
+        self.assertTrue(status.is_success(response.status_code))
+
+    def test_get_issue04_requestor_target_same(self):
+        data = {
+            "requestor": "user4@a.com",
+            "target": "user4@a.com"
+        }
+        request = self.factory.post('/subscribe/', data, format='json')
         print(repr(request))
         view = SubscribeView.as_view()
         response = view(request)
@@ -75,12 +90,12 @@ class SubscribeViewTestCase(SimpleTestCase):
         print(repr(response.data))
         self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
 
-    def test_get_issue04_requestor_target_same(self):
+    def test_get_issue04_invalid_requestor(self):
         data = {
-            "requestor": "user4@a.com",
+            "requestor": "user99@a.com",
             "target": "user4@a.com"
         }
-        request = self.factory.get('/subscribe/', data, format='json')
+        request = self.factory.post('/subscribe/', data, format='json')
         print(repr(request))
         view = SubscribeView.as_view()
         response = view(request)
