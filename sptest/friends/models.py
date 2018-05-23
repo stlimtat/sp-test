@@ -14,25 +14,12 @@ class PersonRelationship(StructuredRel):
     _BLOCK = 'BLOCK'
     _SUBSCRIBE = 'SUBSCRIBE'
 
-    @property
-    def FRIEND(self):
-        return type(self)._FRIEND
-
-    @property
-    def BLOCK(self):
-        return type(self)._BLOCK
-
-    @property
-    def SUBSCRIBE(self):
-        return type(self)._SUBSCRIBE
-
-
 class Person(DjangoNode):
     email = EmailProperty(unique_index=True)
-    friends = Relationship('Person', PersonRelationship.FRIEND, model=PersonRelationship)
-    blocks = RelationshipTo('Person', PersonRelationship.BLOCK, model=PersonRelationship)
+    friends = Relationship('Person', PersonRelationship._FRIEND, model=PersonRelationship)
+    blocks = RelationshipTo('Person', PersonRelationship._BLOCK, model=PersonRelationship)
     # blocked_by = RelationshipFrom('Person', 'BLOCKED_BY')
-    subscribes = RelationshipTo('Person', PersonRelationship.SUBSCRIBE, model=PersonRelationship)
+    subscribes = RelationshipTo('Person', PersonRelationship._SUBSCRIBE, model=PersonRelationship)
     # subscribed_by = RelationshipFrom('Person', 'SUBSCRIBED_BY')
 
     created_by = StringProperty()
@@ -56,6 +43,14 @@ class Person(DjangoNode):
             traversal_definition
         )
         result = relations_traversal.all()
+        return result
+
+    # Get all the friends for a list of person nodes
+    @staticmethod
+    def get_common_friends(person_list):
+        result = []
+        # We don't really know how to handle more than 2 persons at the moment
+
         return result
 
     class Meta:
