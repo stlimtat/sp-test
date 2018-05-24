@@ -19,12 +19,12 @@ from rest_framework_swagger.views import get_swagger_view
 
 from sptest.friends import friends_views, subscribe_views
 
-schema_view = get_swagger_view(title='SP Test')
+schema_views = get_swagger_view(title='Singapore Power Test for Full-Stack Developer')
 
 urlpatterns = [
     url(r'^friends/$', friends_views.FriendsView.as_view()),
     url(r'^subscribe/$', subscribe_views.SubscribeView.as_view()),
-    url(r'^$', schema_view)
+    url(r'^$', schema_views)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
