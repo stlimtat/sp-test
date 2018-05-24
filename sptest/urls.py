@@ -15,12 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework_swagger.views import get_swagger_view
 
-from sptest.friends import friends_views
+from sptest.friends import friends_views, subscribe_views
+
+schema_view = get_swagger_view(title='SP Test')
 
 urlpatterns = [
     url(r'^friends/$', friends_views.FriendsView.as_view()),
-    url(r'^subscribe/$', friends_views.FriendsView.as_view()),
+    url(r'^subscribe/$', subscribe_views.SubscribeView.as_view()),
+    url(r'^$', schema_view)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

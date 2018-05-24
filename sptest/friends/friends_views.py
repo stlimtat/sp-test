@@ -10,8 +10,11 @@ from sptest.friends.views import ViewUtilities
 
 
 class FriendsView(APIView):
-    # The get function has become a monster
-    # It provides for issue #02 and #03
+    '''
+      Issue #0 - Get all recorded friends
+      Issue #2 - As a user, I need an API to retrieve the friends list for an email address
+      Issue #3 - As a user, I need an API to retrieve the common friends list between two email addresses
+    '''
     def get(self, request, format=None):
         result = None
         result_status = status.HTTP_200_OK
@@ -71,7 +74,7 @@ class FriendsView(APIView):
 
 
     """
-      Issue #01 - Link users
+      Issue #1 - As a user, I need an API to create a friend connection between two email addresses
     """
     def post(self, request, format=None):
         result = {

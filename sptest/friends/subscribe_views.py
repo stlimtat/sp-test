@@ -9,9 +9,8 @@ from sptest.friends.views import ViewUtilities
 
 class SubscribeView(APIView):
     """
-      Issue #04 - Link users
+      Issue #04 - As a user, I need an API to subscribe to updates from an email address
     """
-
     def post(self, request, format=None):
         result = {
             'success': True
