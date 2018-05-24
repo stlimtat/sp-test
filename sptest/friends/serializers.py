@@ -33,12 +33,14 @@ class PersonSerializer(serializers.Serializer):
 The request serializers
 """
 class FriendsRequestSerializer(serializers.Serializer):
-    description = "List of emails which need to be connected"
     friends = serializers.ListField(child=serializers.EmailField(),
                                     min_length=2)
 
-class EmailRequestSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
+
+class EmailOrFriendsRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=False)
+    friends = serializers.ListField(required=False,
+                                    child=serializers.EmailField())
 
 
 class RequestorTargetRequestSerializer(serializers.Serializer):
