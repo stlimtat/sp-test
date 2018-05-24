@@ -27,6 +27,14 @@ Develop an API server that does simple "Friend Management" based on the User Sto
 - Complete user stories 5 and 6
 - Actually leverage on Django Rest Framework's authentication service
 
+### Getting Started
+- run the docker compose command to get the neo4j and django server up and running.
+```
+git clone https://github.com/stlimtat/sp-test.git
+cd <path>/sp-test
+docker-compose up
+```
+
 ### APIs
 
 1. Create Friends
