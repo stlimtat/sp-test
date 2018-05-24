@@ -1,10 +1,8 @@
-import coreapi
-import coreschema
 from django.contrib.auth.models import AnonymousUser
+from drf_yasg.utils import swagger_auto_schema
 from neomodel import EITHER
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.schemas import AutoSchema
 from rest_framework.views import APIView
 
 from sptest.friends.models import Person, PersonRelationship
@@ -12,45 +10,22 @@ from sptest.friends.serializers import *
 from sptest.friends.views import ViewUtilities
 
 
-class FriendsViewSchema(AutoSchema):
-    '''
-    Overrides 'get_description()' to provide Custom Behaviour
-    '''
-
-    def get_description(self, path, method):
-        result = super().get_description(path, method)
-        if method == 'POST':
-            result = "Issue #1 - As a user, I need an API to create a friend connection between two email addresses"
-        return result
-
-    '''
-    Overrides 'get_link()' to provide Custom Behaviour
-    '''
-
-    def get_manual_fields(self, path, method):
-        result = super().get_manual_fields(path, method)
-        if method == 'POST':
-            coreapi_field = coreapi.Field(
-                name='friends',
-                description='List of emails to be connected as friends',
-                location='form',
-                required=True,
-                schema=coreschema.Array(
-                    min_items=2,
-                    items=coreschema.String()
-                )
-            )
-            result.append(coreapi_field)
-        return result
-
 class FriendsView(APIView):
-    schema = FriendsViewSchema()
-
-    '''
+    """
       Issue #0 - Get all recorded friends
       Issue #2 - As a user, I need an API to retrieve the friends list for an email address
       Issue #3 - As a user, I need an API to retrieve the common friends list between two email addresses
-    '''
+    """
+
+    @swagger_auto_schema(
+        operation_description="Issue #0 - Get all recorded friends<br/>\
+            Issue #2 - As a user, I need an API to retrieve the friends list for an email address <br/>\
+            Issue #3 - As a user, I need an API to retrieve the common friends list between two email addresses",
+        responses={
+            200: "Depends on input, either returns a list of friends with count",
+            406: "Errors due to errors in the input parameters, either not validated as emails, or insufficient numbers of emails"
+        }
+    )
     def get(self, request, format=None):
         result = None
         result_status = status.HTTP_200_OK
@@ -108,10 +83,18 @@ class FriendsView(APIView):
             }
         return Response(result, status=result_status)
 
+    """
+        Issue #01 - As a user, I need an API to create a friend connection between two email addresses
+    """
 
-    """
-      Issue #1 - As a user, I need an API to create a friend connection between two email addresses
-    """
+    @swagger_auto_schema(
+        operation_description="Issue #01 - As a user, I need an API to create a friend connection between two email addresses",
+        request_body=FriendsRequestSerializer,
+        responses={
+            200: "Email addresses created and connected as friends",
+            406: "Errors due to errors in the input parameters, either not validated as emails, or insufficient numbers of emails"
+        }
+    )
     def post(self, request, format=None):
         result = {
             'success': True
