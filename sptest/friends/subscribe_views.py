@@ -1,9 +1,11 @@
 from django.contrib.auth.models import AnonymousUser
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from sptest.friends.models import Person
+from sptest.friends.serializers import RequestorTargetRequestSerializer
 from sptest.friends.views import ViewUtilities
 
 
@@ -11,6 +13,15 @@ class SubscribeView(APIView):
     """
       Issue #04 - As a user, I need an API to subscribe to updates from an email address
     """
+
+    @swagger_auto_schema(
+        operation_description="Issue #04 - As a user, I need an API to subscribe to updates from an email address",
+        request_body=RequestorTargetRequestSerializer,
+        responses={
+            200: "Depends on input, either returns a list of friends with count",
+            406: "Errors due to errors in the input parameters, either not validated as emails, or insufficient numbers of emails"
+        }
+    )
     def post(self, request, format=None):
         result = {
             'success': True
