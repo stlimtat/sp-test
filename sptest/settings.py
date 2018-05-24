@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_swagger',
+    'drf_yasg',
     'django_neomodel',
     'sptest',
 ]
@@ -101,9 +101,8 @@ REST_FRAMEWORK = {
 }
 
 SWAGGER_SETTINGS = {
-    'APIS_SORTER': 'alpha',
-    'DOC_EXPANSION': 'full',
-    'JSON_EDITOR': True
+    'DEFAULT_MODEL_RENDERING': 'example',
+    'DOC_EXPANSION': 'full'
 }
 
 # Password validation

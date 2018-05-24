@@ -1,6 +1,6 @@
 Django==2.0.5    
 django-neomodel
 djangorestframework
-django-rest-swagger
+drf_yasg
 neo4j-driver==1.5.2
 gunicorn
