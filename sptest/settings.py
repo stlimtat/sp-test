@@ -100,6 +100,12 @@ REST_FRAMEWORK = {
 
 }
 
+SWAGGER_SETTINGS = {
+    'APIS_SORTER': 'alpha',
+    'DOC_EXPANSION': 'full',
+    'JSON_EDITOR': True
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 

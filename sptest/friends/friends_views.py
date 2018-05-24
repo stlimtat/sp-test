@@ -1,7 +1,10 @@
+import coreapi
+import coreschema
 from django.contrib.auth.models import AnonymousUser
 from neomodel import EITHER
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.schemas import AutoSchema
 from rest_framework.views import APIView
 
 from sptest.friends.models import Person, PersonRelationship
@@ -9,7 +12,40 @@ from sptest.friends.serializers import *
 from sptest.friends.views import ViewUtilities
 
 
+class FriendsViewSchema(AutoSchema):
+    '''
+    Overrides 'get_description()' to provide Custom Behaviour
+    '''
+
+    def get_description(self, path, method):
+        result = super().get_description(path, method)
+        if method == 'POST':
+            result = "Issue #1 - As a user, I need an API to create a friend connection between two email addresses"
+        return result
+
+    '''
+    Overrides 'get_link()' to provide Custom Behaviour
+    '''
+
+    def get_manual_fields(self, path, method):
+        result = super().get_manual_fields(path, method)
+        if method == 'POST':
+            coreapi_field = coreapi.Field(
+                name='friends',
+                description='List of emails to be connected as friends',
+                location='form',
+                required=True,
+                schema=coreschema.Array(
+                    min_items=2,
+                    items=coreschema.String()
+                )
+            )
+            result.append(coreapi_field)
+        return result
+
 class FriendsView(APIView):
+    schema = FriendsViewSchema()
+
     '''
       Issue #0 - Get all recorded friends
       Issue #2 - As a user, I need an API to retrieve the friends list for an email address
