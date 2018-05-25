@@ -46,3 +46,8 @@ class EmailOrFriendsRequestSerializer(serializers.Serializer):
 class RequestorTargetRequestSerializer(serializers.Serializer):
     requestor = serializers.EmailField(required=True)
     target = serializers.EmailField(required=True)
+
+
+class SocialUpdateRequestSerializer(serializers.Serializer):
+    sender = serializers.EmailField(required=True)
+    text = serializers.CharField(required=True)
