@@ -27,8 +27,12 @@ class PersonTestCase(TestCase):
         users[0].friends.connect(users[1])
         users[0].friends.connect(users[2])
         users[0].friends.connect(users[3])
+        users[0].friends.connect(users[4])
         users[4].blocks.connect(users[0])
         users[4].blocks.connect(users[5])
+        users[6].subscribes.connect(users[0])
+        users[6].subscribes.connect(users[7])
+
 
     @staticmethod
     def teardown_models():
