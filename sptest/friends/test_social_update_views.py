@@ -13,7 +13,8 @@ class SocialUpdateViewTestCase(SimpleTestCase):
         self.client = APIClient()
 
     def tearDown(self):
-        PersonTestCase.teardown_models()
+        # PersonTestCase.teardown_models()
+        pass
 
     def test_get_issue06_happy(self):
         data = {
@@ -61,7 +62,7 @@ class SocialUpdateViewTestCase(SimpleTestCase):
     def test_get_issue06_text_mention_blockers(self):
         data = {
             "sender": "user1@a.com",
-            "text": "user5@a.com,user6@a.com"
+            "text": "user5@a.com,user6@a.com,user9@a.com"
         }
         request = self.factory.post('/social-update/', data, format='json')
         print(repr(request))

@@ -2,6 +2,7 @@ import re
 
 from django.contrib.auth.models import AnonymousUser
 from drf_yasg.utils import swagger_auto_schema
+from neomodel import db
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -64,7 +65,7 @@ class SocialUpdateView(APIView):
                     }
                     result_status = status.HTTP_406_NOT_ACCEPTABLE
                 else:
-                    sender_person = Person.nodes.get_or_none(sender_req)
+                    sender_person = Person.nodes.get_or_none(email=sender_req)
                     if not sender_person:
                         result = {
                             'success': False,
@@ -75,17 +76,29 @@ class SocialUpdateView(APIView):
                         # Issue #6b-03 - has been @mentioned in the update
                         email_re_match = re.findall(r'[\w\.-]+@[\w\.-]+', text_req)
                         mentioned_person_list = ViewUtilities.get_or_create_email_list(False, email_re_match)
+                        mentioned_email_list = [person.email for person in mentioned_person_list]
+
+                        mentioned_not_blocked_query = "MATCH (friend:Person) MATCH (n:Person) \
+                                WHERE NOT (friend)-[:BLOCK]->(n) \
+                                AND n.email='%s' \
+                                AND friend.email IN %s \
+                                RETURN DISTINCT friend.email \
+                                ORDER BY friend.email ASC" % (sender_person.email, mentioned_email_list)
+                        mentioned_not_blocked_query_result, meta = db.cypher_query(mentioned_not_blocked_query)
+                        mentioned_not_blocked_query_result_email_list = [email_list[0] for email_list in
+                                                                         mentioned_not_blocked_query_result]
 
                         # cypher query to search for all friends, merge with all subscribed who are not blocked
-                        query = "MATCH (n:Person)-[:FRIEND|SUBSCRIBE]-(friend:Person) \
+                        main_query = "MATCH (n:Person)-[:FRIEND|SUBSCRIBE]-(friend:Person) \
                                 WHERE NOT (friend)-[:BLOCK]->(n) \
-                                n.email='%s' \
+                                AND n.email='%s' \
                                 RETURN DISTINCT friend.email \
                                 ORDER BY friend.email ASC" % (sender_person.email)
-                        query_result, meta = db.cypher_query(query)
+                        main_query_result, meta = db.cypher_query(main_query)
+                        main_query_result_email_list = [email_list[0] for email_list in main_query_result]
                         result = {
                             'success': True,
-                            'friends': query_result + mentioned_person_list
+                            'friends': main_query_result_email_list + mentioned_not_blocked_query_result_email_list
                         }
 
         return Response(result, status=result_status)
