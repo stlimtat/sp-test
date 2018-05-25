@@ -208,3 +208,20 @@ class FriendsViewTestCase(SimpleTestCase):
         self.assertIsNotNone(response.data)
         print(repr(response.data))
         self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
+
+    def test_get_issue05_trying_to_friend_blocked(self):
+        data = {
+            "friends": [
+                "user5@a.com",
+                "user1@a.com"
+            ]
+        }
+        request = self.factory.get('/friends/', data, format='json')
+        print(repr(request))
+        view = FriendsView.as_view()
+        response = view(request)
+        self.assertIsNotNone(response)
+        print(repr(response))
+        self.assertIsNotNone(response.data)
+        print(repr(response.data))
+        self.assertTrue(status.is_success(response.status_code))

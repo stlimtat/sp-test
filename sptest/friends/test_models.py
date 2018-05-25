@@ -27,8 +27,8 @@ class PersonTestCase(TestCase):
         users[0].friends.connect(users[1])
         users[0].friends.connect(users[2])
         users[0].friends.connect(users[3])
-        users[2].blocks.connect(users[0])
-        users[2].blocks.connect(users[1])
+        users[4].blocks.connect(users[0])
+        users[4].blocks.connect(users[5])
 
     @staticmethod
     def teardown_models():

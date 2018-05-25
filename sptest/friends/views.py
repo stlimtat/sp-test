@@ -77,7 +77,8 @@ class ViewUtilities():
             inner_loop_person_list.remove(current_person)
             for loop_person in inner_loop_person_list:
                 if not loop_person.friends.is_connected(current_person) \
-                        and not loop_person.blocks.is_connected(current_person):
+                        and not loop_person.blocks.is_connected(current_person) \
+                        and not current_person.blocks.is_connected(loop_person):
                     current_person.friends.connect(loop_person)
         return
 
