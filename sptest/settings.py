@@ -101,8 +101,7 @@ REST_FRAMEWORK = {
 }
 
 SWAGGER_SETTINGS = {
-    'DEFAULT_MODEL_RENDERING': 'example',
-    'DOC_EXPANSION': 'full'
+    'DEFAULT_MODEL_RENDERING': 'example'
 }
 
 # Password validation
