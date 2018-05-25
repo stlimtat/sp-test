@@ -13,8 +13,7 @@ class SocialUpdateViewTestCase(SimpleTestCase):
         self.client = APIClient()
 
     def tearDown(self):
-        # PersonTestCase.teardown_models()
-        pass
+        PersonTestCase.teardown_models()
 
     def test_get_issue06_happy(self):
         data = {
