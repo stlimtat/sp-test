@@ -18,7 +18,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from sptest.friends import friends_views, subscribe_views
+from sptest.friends import friends_views, subscribe_views, block_views
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,6 +34,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     url(r'^friends/$', friends_views.FriendsView.as_view()),
     url(r'^subscribe/$', subscribe_views.SubscribeView.as_view()),
+    url(r'^block/$', block_views.BlockView.as_view()),
     url(r'^$', schema_view.with_ui('swagger', cache_timeout=None), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
 ]
