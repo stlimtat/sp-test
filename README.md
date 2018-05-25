@@ -1,4 +1,4 @@
-## sptest
+## Singapore Power Test for Full Stack Engineer
 
 ### Background
 For any application with a need to build its own social network, "Friends Management" is a common requirement
@@ -14,13 +14,15 @@ Develop an API server that does simple "Friend Management" based on the User Sto
 
 * Python
 * Django>2.0
-* Django Rest Framework
+* [Django Rest Framework](http://www.django-rest-framework.org/)
   * I had problems learning the framework while doing
-* Neo4j
+* [drf-yasg](https://drf-yasg.readthedocs.io/en/stable/)
+* [Neo4j](https://neo4j.com/)
   * A graph database is probably best suited for this social network question
   * It did take some time to learn the cypher query format
-* django_neomodel
+* [django_neomodel](https://github.com/neo4j-contrib/django-neomodel)
   * I needed something that interfaced seamlessly with neo4j for django
+* [neomodel](http://neomodel.readthedocs.io/en/latest/)
 
 ### TODO
 - Actually leverage on Django Rest Framework's authentication service - No authentication at the moment
