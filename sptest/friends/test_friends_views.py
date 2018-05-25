@@ -2,19 +2,18 @@ from django.test import SimpleTestCase
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APIClient
 
-from sptest.apps import SptestConfig
 from sptest.friends.friends_views import FriendsView
+from sptest.friends.test_models import PersonTestCase
 
 
 class FriendsViewTestCase(SimpleTestCase):
     def setUp(self):
-        SptestConfig.setup_models()
+        PersonTestCase.setup_models()
         self.factory = APIRequestFactory()
         self.client = APIClient()
 
     def tearDown(self):
-        pass
-        # PersonTestCase.teardown_models()
+        PersonTestCase.teardown_models()
 
     def test_get_issue00_persons_list_with_factory(self):
         request = self.factory.get('/friends/')

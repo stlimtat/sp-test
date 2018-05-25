@@ -3,7 +3,6 @@ from django.utils.six import BytesIO
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 
-from sptest.apps import SptestConfig
 from sptest.friends.models import Person
 from sptest.friends.serializers import PersonSerializer, FriendsRequestSerializer
 from sptest.friends.test_models import PersonTestCase
@@ -11,7 +10,7 @@ from sptest.friends.test_models import PersonTestCase
 
 class PersonSerializerTestCase(SimpleTestCase):
     def setUp(self):
-        SptestConfig.setup_models()
+        PersonTestCase.setup_models()
         self.persons = Person.nodes.all()
 
     def tearDown(self):
