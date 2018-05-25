@@ -34,6 +34,8 @@ git clone https://github.com/stlimtat/sp-test.git
 cd <path>/sp-test
 docker-compose up
 ```
+- Once the docker is running, you can browse to the link below to view the APIs
+  - [http://localhost:8000/](http://localhost:8000/)
 
 ### APIs
 
