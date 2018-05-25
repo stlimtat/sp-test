@@ -23,9 +23,8 @@ Develop an API server that does simple "Friend Management" based on the User Sto
   * I needed something that interfaced seamlessly with neo4j for django
 
 ### TODO
-- Provide documentation as Swagger documentation - I missed that
-- Complete user stories 5 and 6
-- Actually leverage on Django Rest Framework's authentication service
+- Actually leverage on Django Rest Framework's authentication service - No authentication at the moment
+- My code is bad for situations where the number of data in the db is huge.  I will need to  optimize all the calls
 
 ### Getting Started
 - run the docker compose command to get the neo4j and django server up and running.
