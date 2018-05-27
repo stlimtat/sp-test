@@ -5,7 +5,7 @@ from rest_framework.renderers import JSONRenderer
 
 from sptest.friends.models import Person
 from sptest.friends.serializers import PersonSerializer, FriendsRequestSerializer
-from sptest.friends.test_models import PersonTestCase
+from sptest.friends.tests.test_models import PersonTestCase
 
 
 class PersonSerializerTestCase(SimpleTestCase):

@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APIClient
 
 from sptest.friends.block_views import BlockView
-from sptest.friends.test_models import PersonTestCase
+from sptest.friends.tests.test_models import PersonTestCase
 
 
 class BlockViewTestCase(SimpleTestCase):
