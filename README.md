@@ -1,16 +1,18 @@
-## Singapore Power Test for Full Stack Engineer
+![SP Group Logo](https://www.spgroup.com.sg/www/theme/logo.png)
 
-### Background
+# SP Group Full Stack Engineer Coding Test
+
+## Background
 For any application with a need to build its own social network, "Friends Management" is a common requirement
 which usually starts off simple but can grow in complexity depending on the application's use case.
 
 Usually, applications would start with features like "Friend", "Unfriend", "Block", "Receive Updates" etc.
 
-### Task
+## Task
 
 Develop an API server that does simple "Friend Management" based on the User Stories below.
 
-### Technologies chosen
+## Technologies chosen
 
 * Python
 * Django>2.0
@@ -24,19 +26,21 @@ Develop an API server that does simple "Friend Management" based on the User Sto
   * I needed something that interfaced seamlessly with neo4j for django
 * [neomodel](http://neomodel.readthedocs.io/en/latest/)
 
-### TODO
+## TODO
 - Actually leverage on Django Rest Framework's authentication service - No authentication at the moment
 - My code is bad for situations where the number of data in the db is huge.  I will need to  optimize all the calls
 
-### Getting Started
+## Installing / Getting started
 - run the docker compose command to get the neo4j and django server up and running.
-```
+```shell
 git clone https://github.com/stlimtat/sp-test.git
 cd <path>/sp-test
 docker-compose up
 ```
 - Once the docker is running, you can browse to the link below to view the APIs
   - [http://localhost:8000/](http://localhost:8000/)
+
+## Features
 
 ### APIs
 
@@ -113,3 +117,12 @@ This should connect from the requestor to the target with a relationship of SUBS
 This relationship is directional.
 
 The SUBSCRIBE relationship will need to be obtained later.
+
+## Contributing
+
+If you'd like to contribute, please fork the repository and use a feature
+branch. Pull requests are warmly welcome.
+
+## Licensing
+
+The code in this project is licensed under Apache 2.0 license.
